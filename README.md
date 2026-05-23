@@ -10,6 +10,8 @@ We called it a **constructive transformer**.
 
 The obvious question: if you can't learn the weights, where do they come from? Our answer was surprising: the same place traditional data structures get their randomness. We just didn't know it yet.
 
+For other data structures built on the same principle, see [riemann_structures](https://github.com/lostdemeter/riemann_structures).
+
 ---
 
 ### The Primitive
@@ -132,3 +134,5 @@ amplitude[m] = exp(i * GAMMAS[m] * x)   # for m = 0..K
 ```
 
 No random seeds. No state. No CSPRNG. Just γ × key mod 2π.
+
+---
