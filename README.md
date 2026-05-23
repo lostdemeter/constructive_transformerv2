@@ -108,31 +108,18 @@ where σ is a signed threshold function, not a softmax. This is O(N·H) — line
 
 ---
 
-### The Core Code
+### Running the Demo
 
-```python
-def digit(key, gamma, B=256):
-    """The universal primitive. Returns a uniform integer in [0, B)."""
-    phase = gamma * key
-    return int((phase % (2 * math.pi)) / (2 * math.pi) * B) % B
+```bash
+# Create a virtual environment (Python 3.10+ required)
+python3 -m venv venv
+source venv/bin/activate
 
-# One zero → hash function
-bucket = digit(key, GAMMAS[0], 620)
+# Install dependencies
+pip install matplotlib numpy
 
-# Two zeros → quotient/remainder for cuckoo filter
-q = digit(key, GAMMAS[0], m)   # quotient = bucket index
-r = digit(key, GAMMAS[1], 64)  # remainder = fingerprint
-
-# K zeros → mixed-radix key for ordering/priority
-key = sum(digit(x, GAMMAS[n], B) * (B ** n) for n in range(K))
-
-# K zeros → fractional priority in [0, 1)
-priority = sum(digit(x, GAMMAS[n], B) * (B ** (-n-1)) for n in range(K))
-
-# K zeros → amplitude vector for frequency-space matching
-amplitude[m] = exp(i * GAMMAS[m] * x)   # for m = 0..K
+# Run the demo
+python demo.py
 ```
-
-No random seeds. No state. No CSPRNG. Just γ × key mod 2π.
 
 ---
